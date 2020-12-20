@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
+use Exception;
 
 class LoginController extends Controller
 {
@@ -32,10 +33,10 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         $user = $this->getUserByEmail($request->input('email'));
-        if($user == NULL) return "Not log inn";
+        if($user == NULL) throw new Exception('Not log in');
 
         $password = $request->input('password');
-        if($user[0]->password != $password) return "Not log in";
+        if($user[0]->password != $password) throw new Exception('Not log in');
 
         print_r("logged");
 
